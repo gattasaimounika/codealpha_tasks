@@ -1,0 +1,41 @@
+import random
+
+words = ["apple", "tiger", "chair", "robot", "plant"]
+word = random.choice(words)
+guessed = []
+attempts = 6
+
+print("Welcome to Hangman Game")
+
+while attempts > 0:
+    display = ""
+
+    for letter in word:
+        if letter in guessed:
+            display += letter + " "
+        else:
+            display += "_ "
+
+    print("Word:", display)
+
+    guess = input("Enter a letter: ").lower().strip()
+
+    if len(guess) != 1 or not guess.isalpha():
+        print("Enter a valid single letter")
+        continue
+
+    if guess in word:
+        if guess not in guessed:
+            guessed.append(guess)
+        else:
+            print("Already guessed")
+    else:
+        attempts -= 1
+        print("Wrong guess. Attempts left:", attempts)
+
+    if all(letter in guessed for letter in word):
+        print("You won. The word is:", word)
+        break
+
+if attempts == 0:
+    print("You lost. The word was:", word)
